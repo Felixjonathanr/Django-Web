@@ -27,17 +27,18 @@ def login (request):
         username2 = request.POST['username2']
         password2 = request.POST['password2']
         role2 = request.POST['role2']
-
         try :
             user = Bikin_akun.objects.get(username=username2, password=password2, role= role2)
+            request.session['username3'] = user.username
             if role2 =="seller":
-                return redirect(anda)
-            else:
                 return redirect(index)
+            else:
+                return redirect(users)
         except Bikin_akun.DoesNotExist:
             messages.info(request, 'Akun atau password atau role anda salah')
             return redirect(login)
 
     return render(request, 'login.html')
 def users(request):
-    return render(request,'users.html')
+    username3 = request.session.get('username3')
+    return render(request,'users.html', {'username': username3})
