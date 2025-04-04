@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import Bikin_akun
 from django.contrib import messages
-
+from .models import Produk
 
 def index(request):
     return render(request, 'index.html')
@@ -41,4 +41,6 @@ def login (request):
     return render(request, 'login.html')
 def users(request):
     username3 = request.session.get('username3')
-    return render(request,'users.html', {'username': username3})
+    Produk1 = Produk.objects.all()
+
+    return render(request,'users.html', {'username': username3, 'Produk1': Produk1})
